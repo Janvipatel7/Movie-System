@@ -16,6 +16,7 @@ const App = () => {
                 <Route path="/add-movie" element={<AddMovie />} />
                 <Route path="/display-movie" element={<DisplayMovie/>} />
                 <Route path="/edit-movie/:id" element={<EditMovie/>} />
+               
 
             </Routes>
         </BrowserRouter>
