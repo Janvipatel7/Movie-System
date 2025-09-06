@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditMovie = () => {
 
@@ -27,8 +28,14 @@ const EditMovie = () => {
     const editMovie = async () => {
         await axios.put(`http://localhost:3000/movies/${id}` , input)
     }
-    const handleSubmit = (e) => {
+    const handleUpdate = (e) => {
         e.preventDefault();
+
+        if(input.title.trim() == "" || input.url.trim() == "" || input.genre.trim() == ""){
+            toast.error("Enter All Details Correctly !")
+            return;
+        }
+        
         editMovie()
         setInput({ title: "", url: "", genre: "" })
         navigate("/display-movie")
@@ -42,7 +49,7 @@ const EditMovie = () => {
                 </h2>
 
 
-                <form onSubmit={handleSubmit} className="w-full max-w-lg bg-[#1a1c22] p-8 rounded-xl shadow-lg">
+                <form onSubmit={handleUpdate} className="w-full max-w-lg bg-[#1a1c22] p-8 rounded-xl shadow-lg">
                     <div className="mb-5">
                         <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-300">
                             Movie Title
@@ -80,15 +87,13 @@ const EditMovie = () => {
 
                         <button
                             type="button"
-                            className="border border-gray-400 px-6 py-3 rounded-md font-semibold hover:border-white transition"
-                        >
+                            className="border border-gray-400 px-6 py-3 rounded-md font-semibold hover:border-white transition">
                             Add Description
                         </button>
 
                         <button
                             type="submit"
-                            className="bg-[#e50914] px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition"
-                        >
+                            className="bg-[#e50914] px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition">
                             Update
                         </button>
                     </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { toast } from "react-toastify";
 
 const AddMovie = () => {
 
@@ -20,7 +21,6 @@ const AddMovie = () => {
   let markdown = useRef(null)
   const handleClick = () => {
     markdown.current = editorRef.current.getInstance().getHTML();
-
     setShow(!show)
   };
 
@@ -30,6 +30,11 @@ const AddMovie = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(input.title.trim() == "" || input.url.trim() == "" || input.genre.trim() == ""){
+      toast.error("Enter All Details Correctly !")
+      return;
+    }
     addMovie()
     navigate("/display-movie")
     setInput({ title: "", url: "", genre: "" })
